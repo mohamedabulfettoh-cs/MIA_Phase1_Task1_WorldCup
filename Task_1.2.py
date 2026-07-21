@@ -1,10 +1,15 @@
 """
 MD5 implemented from scratch, no hashlib.
 
+I chose to implement MD5 as my checksum method because I am a cybersecurity student
+and I already once worked on a hashcracker that required implementing SHA256
+from scratch for CUDA to run it on my GPU so implementing MD5 felt like a good step
+to refresh my memory of hashing algorithms
+
 MD5, message digest 5 is a cryptographic hash algorithm that takes in 512 bit chunks
 and outputs a 128 bit hash through bit manipulation and modular arithmetic
 
-It keeps a running state of 128 bits that gets split into 4 32 bit 'words' that are
+It works by keeping a running state of 128 bits that gets split into 4 32 bit 'words' that are
 constantly updated through each of the 64 rounds of algorithm
 The initial state is hardcoded to specific values and are often called A, B, C & D
 
