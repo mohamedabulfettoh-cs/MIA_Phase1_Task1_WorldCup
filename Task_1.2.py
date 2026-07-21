@@ -118,15 +118,10 @@ def md5(message: bytes) -> str:
 
 class TicketCodec:
     """
-    Encodes/decodes stadium ticket IDs with a tamper-evident checksum,
-    using a from-scratch MD5 implementation.
+    Encodes/decodes stadium ticket IDs with MD5 checksum
     """
 
     def _checksum(self, ticket_id):
-        # MD5 hash of the ticket ID, truncated to first 4 hex chars.
-        # Any single-character change to ticket_id produces a completely
-        # different hash (avalanche effect), so truncating still keeps
-        # it non-trivial to fake — MD5 output is far from linear/guessable.
         full_hash = md5(ticket_id.encode())
         return full_hash[:4]
 
@@ -153,6 +148,6 @@ if __name__ == "__main__":
 
     # Corrupt one character to test corrupted ticket handling
     barcode = codec.encode("MIA2026GATE7")
-    corrupted = barcode.replace("7-", "4-", 1)  # change ticket ID digit, not checksum
+    corrupted = barcode.replace("7-", "4-", 1)  # change ticket ID digit
     print(f"\nCorrupted barcode: {corrupted}")
     print(f"Decode the corrupted barcode: {corrupted}) -> {codec.decode(corrupted)}")
